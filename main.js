@@ -124,46 +124,104 @@ function create() {
     });
 
 
-    // ====================================
-    // START MISSION BUTTON
-    // ====================================
+   
+// ===================================
+// START MISSION BUTTON
+// ===================================
 
-    const startButton = this.add.rectangle(
-        640, 650,
-        350, 75,
-        0xffa51f
-    );
+const startButton = this.add.container(640, 625);
 
-    startButton
-        .setStrokeStyle(4, 0xffdf82)
-        .setInteractive({
-            useHandCursor: true
-        });
+// 1. Button shadow
+const shadow = this.add.graphics();
+shadow.fillStyle(0x54200f, 1);
+shadow.fillRoundedRect(-210, -43, 420, 100, 50);
+shadow.y = 10;
+startButton.add(shadow);
 
-    const buttonText = this.add.text(
-        640, 650,
-        "START MISSION  ▶",
-        {
-            fontFamily: "Arial",
-            fontSize: "30px",
-            fontStyle: "bold",
-            color: "#442018"
+// 2. Outer dark border
+const border = this.add.graphics();
+border.fillStyle(0x7b2d12, 1);
+border.fillRoundedRect(-210, -50, 420, 100, 50);
+startButton.add(border);
+
+// 3. Main golden button
+const button = this.add.graphics();
+button.fillStyle(0xffa000, 1);
+button.fillRoundedRect(-204, -47, 408, 88, 44);
+
+// 4. Lighter golden upper layer
+button.fillStyle(0xffc02e, 1);
+button.fillRoundedRect(-198, -43, 396, 57, 38);
+
+// 5. Glossy highlight
+button.fillStyle(0xffdf75, 0.75);
+button.fillRoundedRect(-175, -39, 350, 13, 8);
+
+// 6. Bottom orange shade
+button.fillStyle(0xf58200, 1);
+button.fillRoundedRect(-190, 18, 380, 22, 12);
+
+startButton.add(button);
+
+// 7. Button outline
+const outline = this.add.graphics();
+outline.lineStyle(4, 0xffdf79, 1);
+outline.strokeRoundedRect(-204, -47, 408, 88, 44);
+startButton.add(outline);
+
+// 8. Button text
+const buttonText = this.add.text(-28, 0, "START MISSION", {
+    fontFamily: "Arial",
+    fontSize: "32px",
+    fontStyle: "bold",
+    color: "#ffffff",
+    stroke: "#71300f",
+    strokeThickness: 6
+}).setOrigin(0.5);
+
+startButton.add(buttonText);
+
+// 9. Play icon
+const playIcon = this.add.graphics();
+playIcon.fillStyle(0x54200f, 1);
+playIcon.fillTriangle(155, -16, 155, 16, 180, 0);
+startButton.add(playIcon);
+
+// 10. Clickable area
+const hitArea = this.add.zone(640, 625, 420, 100)
+    .setInteractive({ useHandCursor: true });
+
+// Hover animation
+hitArea.on("pointerover", () => {
+    this.tweens.add({
+        targets: startButton,
+        scale: 1.05,
+        duration: 150,
+        ease: "Back.Out"
+    });
+});
+
+hitArea.on("pointerout", () => {
+    this.tweens.add({
+        targets: startButton,
+        scale: 1,
+        duration: 150
+    });
+});
+
+// Click animation and start the next scene
+hitArea.on("pointerdown", () => {
+    this.tweens.add({
+        targets: startButton,
+        scale: 0.96,
+        duration: 100,
+        yoyo: true,
+        onComplete: () => {
+            this.scene.start("intro");
         }
-    ).setOrigin(0.5);
-
-
-    // Button hover effect
-    startButton.on("pointerover", () => {
-        startButton.setFillStyle(0xffc044);
-        startButton.setScale(1.04);
-        buttonText.setScale(1.04);
     });
+});
 
-    startButton.on("pointerout", () => {
-        startButton.setFillStyle(0xffa51f);
-        startButton.setScale(1);
-        buttonText.setScale(1);
-    });
 
 
     // ====================================
