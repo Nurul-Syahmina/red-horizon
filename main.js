@@ -58,50 +58,65 @@ function create() {
     this.add.image(640, 360, "background")
         .setDisplaySize(1280, 720);
 
-    // Dark transparent overlay behind title
-    this.add.rectangle(
-        640, 115, 700, 155, 0x251329, 0.35
-    );
+  
+    // ===================================
+    // RED HORIZON GAME LOGO
+    // ===================================
 
-    // Game title
-    this.add.text(640, 95, "RED HORIZON", {
+    const logo = this.add.container(640, 105);
+
+    // Title shadow
+    const titleShadow = this.add.text(0, 8, "RED HORIZON", {
         fontFamily: "Arial",
         fontSize: "76px",
-        fontStyle: "bold",
+        fontStyle: "bold italic",
         color: "#ffffff",
-        stroke: "#8d2c1d",
-        strokeThickness: 10
+        stroke: "#4b160d",
+        strokeThickness: 13
     }).setOrigin(0.5);
 
-    // Subtitle
-    this.add.text(
-        640, 160,
+    // Main title
+    const title = this.add.text(0, 0, "RED HORIZON", {
+        fontFamily: "Arial",
+        fontSize: "76px",
+        fontStyle: "bold italic",
+        color: "#ffffff",
+        stroke: "#a83216",
+        strokeThickness: 8
+    }).setOrigin(0.5);
+
+    logo.add([titleShadow, title]);
+
+    // Subtitle banner
+    const banner = this.add.graphics();
+
+    banner.fillStyle(0x8e2915, 1);
+    banner.fillRoundedRect(-220, 58, 440, 51, 16);
+
+    banner.fillStyle(0xf04b1c, 1);
+    banner.fillRoundedRect(-215, 55, 430, 45, 14);
+
+    banner.lineStyle(3, 0xffa13b, 1);
+    banner.strokeRoundedRect(-215, 55, 430, 45, 14);
+
+    logo.add(banner);
+
+    // Subtitle text
+    const subtitle = this.add.text(
+        0, 77,
         "JUNIOR ASTRONAUT MISSION",
         {
             fontFamily: "Arial",
-            fontSize: "30px",
-            fontStyle: "bold",
-            color: "#fff0cf"
-        }
-    ).setOrigin(0.5);
-
-    // Welcome message
-    this.add.text(
-        640, 250,
-        "WELCOME TO MARS, COMMANDER!",
-        {
-            fontFamily: "Arial",
-            fontSize: "30px",
-            fontStyle: "bold",
+            fontSize: "27px",
+            fontStyle: "bold italic",
             color: "#ffffff",
-            backgroundColor: "#873a32",
-            padding: {
-                x: 18,
-                y: 12
-            }
+            stroke: "#a83216",
+            strokeThickness: 2
         }
     ).setOrigin(0.5);
 
+    logo.add(subtitle);
+  
 
     // ====================================
     // ASTRO CHARACTER
